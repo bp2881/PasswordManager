@@ -1,7 +1,6 @@
 #include <iostream>
-#include "data_type.hpp"
+#include "tools.hpp"
 #include "password_manager.hpp"
-#include "file_stream.hpp"
 
 
 int main() {
@@ -26,18 +25,14 @@ int main() {
                 std::cout << entry.first << ": " << entry.second << "\n";
             }
         }
+
         else if (option == 3) {
-            save_to_json(helper);
+            verification_data verify;
+            std::cin >> verify.website_name >> verify.credentials.uname >> verify.credentials.upass;
+            if (helper.verify_password(verify)) std::cout << "\nPassword is correct.";
+            else std::cout << "\nPassword Failed";
         }
-        else if (option == 4) {
-            auto data = load_from_json();
-            for (const auto &[web, entry]: data) {
-                std::cout << web << " has:\n";
-                for (auto &d: entry) {
-                    std::cout << d.first << ": " << d.second << "\n";
-                }
-            }
-        }
+        
         else break;
     }
 

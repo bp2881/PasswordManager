@@ -1,6 +1,6 @@
 #pragma once
 
-#include "data_type.hpp"
+#include "tools.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -10,11 +10,13 @@
 
 class PasswordManager {
 private:
-    std::unordered_map<std::string, std::vector<std::pair<std::string, std::string>>> database;
-
+    hash_data database;
+    void save_to_json();
+    void load_from_json(std::string file_name="data.json");
+    hash_data access_all();
 public:
-    PasswordManager() = default;
+    PasswordManager();
     void create(std::string website_name, std::string uname, std::string upass);
     website_data access(std::string website_name);
-    hash_data access_all();
+    bool verify_password(verification_data v_data);
 };

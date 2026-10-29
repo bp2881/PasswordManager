@@ -5,10 +5,10 @@ This is a free password manager which syncs across devices and also is very secu
 
 Made with C++ with CMake.
 
-# Current version: 0.01
+# Current version: 0.02
 
-Fiddling around CMake, and created a base version which can load json from storage to RAM and vice versa. 
-Standardizing/Prettifying code along with learning System design with C++ is a lengthy process so this project will definitely take a long time.
+Still Fiddling around CMake, and created a base version which can load json from storage to RAM and vice versa [added tempo encryption]
+Standardizing/Prettifying code along with learning System design with C++ is a lengthy process so this project will definitely take a long time. [sharing class/object among files]
 
 # PLAN / DESIGN
 

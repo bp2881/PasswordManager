@@ -1,15 +1,16 @@
-#include "file_stream.hpp"
-#include "data_type.hpp"
+#include "tools.hpp"
+#include "password_manager.hpp"
 
-#include <iostream>
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include <iostream>
+
 
 using json = nlohmann::json;
 
-void save_to_json(PasswordManager &obj) {
+void PasswordManager::save_to_json() {
     std::ofstream file("data.json");
-    json j = obj.access_all();
+    json j = access_all();
 
     if (file.is_open()) {
         file << j.dump(4) << std::endl;
@@ -17,17 +18,16 @@ void save_to_json(PasswordManager &obj) {
     }
 }
 
-hash_data load_from_json(std::string file_name) {
+void PasswordManager::load_from_json(std::string file_name) {
     std::ifstream file(file_name);
     if (!file.is_open()) {
         std::cerr << "Failed to open file!" << std::endl;
-        return {};
+        return;
     }
 
     json j;
     file >> j;
 
     auto restoredMap = j.get<hash_data>();
-
-    return restoredMap;
+    database = restoredMap;
 }
