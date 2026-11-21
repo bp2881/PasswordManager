@@ -1,6 +1,7 @@
 #include <iostream>
 #include "tools.hpp"
 #include "password_manager.hpp"
+#include <string>
 
 
 int main() {
@@ -9,31 +10,29 @@ int main() {
         int option;
         
         std::cout << "\nSelect Option: ";
-        std::cin >> option;
-
-        if (option == 1) {
-            std::string website_name, uname, upass;
-            std::cin >> website_name >> uname >> upass;
-            helper.create(website_name, uname, upass);
-            std::cout << "Created Entry for " << website_name << "\n";
+        if (!(std::cin >> option)) {
+            break;
         }
-        else if (option == 2) {
-            std::string website_name;
-            std::cin >> website_name;
-            auto data = helper.access(website_name);
-            for (auto &entry: data) {
-                std::cout << entry.first << ": " << entry.second << "\n";
+        std::string ms;
+
+        switch (option) {
+            case 1: {
+                std::cout << "Enter Master Password: ";
+                std::cin >> ms;
+                auto dict = helper.master_hash_password(ms);
+                helper.push_master_pass(dict);
+                break;
             }
+            case 2: {
+                std::cout << "Enter Master Password to check: ";
+                std::cin >> ms;
+                std::cout << helper.master_verify_password(ms, helper.access_master_pass()) << "\n";
+                break;
+            }
+            default:
+                std::cout << "Invalid Option!\n";
+                break; 
         }
-
-        else if (option == 3) {
-            verification_data verify;
-            std::cin >> verify.website_name >> verify.credentials.uname >> verify.credentials.upass;
-            if (helper.verify_password(verify)) std::cout << "\nPassword is correct.";
-            else std::cout << "\nPassword Failed";
-        }
-        
-        else break;
     }
 
     return 0;

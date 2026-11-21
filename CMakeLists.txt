@@ -7,13 +7,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenSSL REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SODIUM REQUIRED IMPORTED_TARGET libsodium)
 
 add_executable(PasswordManager
     src/main.cpp
     src/password_manager.cpp
-    src/tools.cpp
     src/verification.cpp
 )
 
-target_link_libraries(PasswordManager PRIVATE OpenSSL::Crypto)
+target_link_libraries(PasswordManager PRIVATE OpenSSL::Crypto nlohmann_json::nlohmann_json PkgConfig::SODIUM)
 target_include_directories(PasswordManager PRIVATE include)
